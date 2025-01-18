@@ -12,7 +12,7 @@ public class Main {
             try {
                 SocketTcpServer server = new SocketTcpServer(3000);
                 Socket socket = server.obtainsSockets();
-                new SocketTcp(socket).run();
+                new SocketTcp(socket).start();
             } catch (IOException e) {
                 System.out.println("Another client can't be connect");
             }

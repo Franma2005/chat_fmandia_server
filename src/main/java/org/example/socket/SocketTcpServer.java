@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SocketTcpServer implements Runnable {
+public class SocketTcpServer {
 
     private ServerSocket serverSocket;
     private Socket socket;
