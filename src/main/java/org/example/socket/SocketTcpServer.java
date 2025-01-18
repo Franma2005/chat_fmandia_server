@@ -17,12 +17,8 @@ public class SocketTcpServer implements Runnable {
         serverSocket = new ServerSocket(port);
     }
 
-    public void obtainsSockets() throws IOException {
+    public Socket obtainsSockets() throws IOException {
         // Este es el momento en el que obtenemos la conexion con el cliente
-        socket = serverSocket.accept();
+        return serverSocket.accept();
     }
-
-
-
-
 }
