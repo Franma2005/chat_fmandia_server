@@ -70,7 +70,7 @@ public class SocketTcp extends Thread {
             do {
                 message = " " + reciveMessage();
                 sendMessage(actualTime + message);
-            } while(message.equals("/END"));
+            } while(!message.equals("/END"));
             stopTextChannels();
             stopSocket();
         } catch(IOException exception) {
