@@ -3,6 +3,7 @@ package org.example.socket;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime;
 
 public class SocketTcpServer implements Runnable {
 
@@ -63,11 +64,15 @@ public class SocketTcpServer implements Runnable {
             startServer();
             startTextChannels();
 
-            String mensaje;
+            LocalDateTime time = LocalDateTime.now();
+            int hour = time.getHour();
+            int minutes = time.getMinute();
+            String actualTime = hour + ":" + minutes;
+            String message;
             do {
-                reciveMessage();
-                sendMessage();
-            } while();
+                message = " " + reciveMessage();
+                sendMessage(actualTime + message);
+            } while(message.equals("/END"));
             stopTextChannels();
             stopServer();
         } catch(IOException exception) {
