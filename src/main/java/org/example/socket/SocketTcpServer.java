@@ -20,6 +20,7 @@ public class SocketTcpServer implements Runnable {
 
     public void startServer() throws IOException{
         System.out.println("(Server) Opening the channels of communication");
+        // Este es el momento en el que obtenemos la conexion con el cliente
         socket = serverSocket.accept();
         is = socket.getInputStream();
         os = socket.getOutputStream();
