@@ -6,5 +6,5 @@ public interface MyObservable {
 
     public void deleteObservable(SocketTcp socketClient);
 
-    public void broadcast();
+    public void broadcast(String message);
 }

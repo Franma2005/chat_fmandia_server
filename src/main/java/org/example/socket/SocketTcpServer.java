@@ -15,7 +15,7 @@ public class SocketTcpServer implements MyObservable {
 
     public void obtainsSockets() throws IOException {
         // Este es el momento en el que obtenemos la conexion con el cliente
-        addObservable(new SocketTcp(serverSocket.accept()));
+        addObservable(new SocketTcp(serverSocket.accept(), this));
         socketsClients.getLast().start();
     }
 
@@ -30,9 +30,9 @@ public class SocketTcpServer implements MyObservable {
     }
 
     @Override
-    public void broadcast() {
+    public void broadcast(String message) {
         for (SocketTcp socketsClient : socketsClients) {
-
+            socketsClient.update(message);
         }
     }
 }

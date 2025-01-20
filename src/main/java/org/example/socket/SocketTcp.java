@@ -12,8 +12,11 @@ public class SocketTcp extends Thread implements MyObserver {
     private BufferedReader br;
     private PrintWriter pw;
 
-    public SocketTcp(Socket socket) {
+    private SocketTcpServer servidor;
+
+    public SocketTcp(Socket socket, SocketTcpServer servidor) {
         this.socket = socket;
+        this.servidor = servidor;
     }
 
     public void startSocket() throws IOException {
@@ -55,6 +58,10 @@ public class SocketTcp extends Thread implements MyObserver {
         return "(Client) " + br.readLine();
     }
 
+    public void notifyServer() {
+        servidor.broadcast(message);
+    }
+
     @Override
     public void run() {
         try {
@@ -68,7 +75,7 @@ public class SocketTcp extends Thread implements MyObserver {
             String message;
             do {
                 message = " " + reciveMessage();
-                update();
+
             } while(!message.equals("/END"));
             stopTextChannels();
             stopSocket();
@@ -79,6 +86,6 @@ public class SocketTcp extends Thread implements MyObserver {
 
     @Override
     public void update(String message) {
-
+        sendMessage(message);
     }
 }
