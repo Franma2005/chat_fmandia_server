@@ -1,11 +1,10 @@
 package org.example.socket;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
 
-public class SocketTcp extends Thread implements MyObservable {
+public class SocketTcp extends Thread implements MyObserver {
 
     private Socket socket;
     private InputStream is;

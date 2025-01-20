@@ -2,10 +2,9 @@ package org.example.socket;
 
 import java.io.*;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
-public class SocketTcpServer implements MyObserver {
+public class SocketTcpServer implements MyObservable {
 
     private ArrayList<SocketTcp> socketsClients = new ArrayList<>();
     private ServerSocket serverSocket;
