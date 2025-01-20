@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
 
-public class SocketTcp extends Thread {
+public class SocketTcp extends Thread implements MyObservable {
 
     private Socket socket;
     private InputStream is;
@@ -69,12 +69,17 @@ public class SocketTcp extends Thread {
             String message;
             do {
                 message = " " + reciveMessage();
-                sendMessage(actualTime + message);
+                update();
             } while(!message.equals("/END"));
             stopTextChannels();
             stopSocket();
         } catch(IOException exception) {
             System.out.println("Error: " + exception.getMessage());
         }
+    }
+
+    @Override
+    public void update(String message) {
+
     }
 }
