@@ -3,22 +3,37 @@ package org.example.socket;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
-public class SocketTcpServer {
+public class SocketTcpServer implements MyObserver {
 
+    private ArrayList<SocketTcp> socketsClients = new ArrayList<>();
     private ServerSocket serverSocket;
-    private Socket socket;
-    private InputStream is;
-    private OutputStream os;
-    private BufferedReader br;
-    private PrintWriter pw;
 
     public SocketTcpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
     }
 
-    public Socket obtainsSockets() throws IOException {
+    public void obtainsSockets() throws IOException {
         // Este es el momento en el que obtenemos la conexion con el cliente
-        return serverSocket.accept();
+        addObservable(new SocketTcp(serverSocket.accept()));
+        socketsClients.getLast().start();
+    }
+
+    @Override
+    public void addObservable(SocketTcp socketClient) {
+        socketsClients.add(socketClient);
+    }
+
+    @Override
+    public void deleteObservable(SocketTcp socketClient) {
+        socketsClients.remove(socketClient);
+    }
+
+    @Override
+    public void broadcast() {
+        for (SocketTcp socketsClient : socketsClients) {
+
+        }
     }
 }

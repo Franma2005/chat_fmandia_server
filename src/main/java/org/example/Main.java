@@ -9,11 +9,10 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args) {
         try {
-        SocketTcpServer server = new SocketTcpServer(3000);
-        while(true) {
-                Socket socket = server.obtainsSockets();
-                new SocketTcp(socket).start();
-        }
+            SocketTcpServer server = new SocketTcpServer(3000);
+            while(true) {
+                server.obtainsSockets();
+            }
         } catch (IOException e) {
             System.out.println("Another client can't be connect");
         }
