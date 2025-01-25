@@ -7,9 +7,8 @@ import java.util.ArrayList;
 
 public interface RoomServices {
 
-    Room createRoom(String name, int capacity);
-    boolean joinRoom(User user, String roomId);
-    ArrayList<User> getUsersInRoom(String roomId);
-
+    public Room createRoom(String name);
+    public ArrayList<String> getRoomsNames();
+    public ArrayList<String> getUsersNames();
 
 }

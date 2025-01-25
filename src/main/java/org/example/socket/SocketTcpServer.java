@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 
-public class SocketTcpServer implements MyObservable {
+public class SocketTcpServer {
 
     private ArrayList<User> socketsClients = new ArrayList<>();
     private ServerSocket serverSocket;
@@ -21,20 +21,5 @@ public class SocketTcpServer implements MyObservable {
         socketsClients.getLast().start();
     }
 
-    @Override
-    public void addObservable(User socketClient) {
-        socketsClients.add(socketClient);
-    }
 
-    @Override
-    public void deleteObservable(User socketClient) {
-        socketsClients.remove(socketClient);
-    }
-
-    @Override
-    public void broadcast(String message) {
-        for (User socketsClient : socketsClients) {
-            socketsClient.update(message);
-        }
-    }
 }
