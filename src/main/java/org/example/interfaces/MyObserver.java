@@ -1,4 +1,4 @@
-package org.example.socket;
+package org.example.interfaces;
 
 public interface MyObserver {
 

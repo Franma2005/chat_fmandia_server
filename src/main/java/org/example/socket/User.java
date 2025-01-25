@@ -1,15 +1,17 @@
 package org.example.socket;
 
+import org.example.interfaces.MyObservable;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 
-public class SocketTcpServer implements MyObservable {
+public class User implements MyObservable {
 
     private ArrayList<SocketTcp> socketsClients = new ArrayList<>();
     private ServerSocket serverSocket;
 
-    public SocketTcpServer(int port) throws IOException {
+    public User(int port) throws IOException {
         serverSocket = new ServerSocket(port);
     }
 

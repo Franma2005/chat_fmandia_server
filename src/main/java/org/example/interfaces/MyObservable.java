@@ -1,4 +1,6 @@
-package org.example.socket;
+package org.example.interfaces;
+
+import org.example.socket.SocketTcp;
 
 public interface MyObservable {
 

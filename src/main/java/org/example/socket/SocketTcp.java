@@ -1,5 +1,7 @@
 package org.example.socket;
 
+import org.example.interfaces.MyObserver;
+
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
@@ -12,9 +14,9 @@ public class SocketTcp extends Thread implements MyObserver {
     private BufferedReader br;
     private PrintWriter pw;
 
-    private SocketTcpServer servidor;
+    private User servidor;
 
-    public SocketTcp(Socket socket, SocketTcpServer servidor) {
+    public SocketTcp(Socket socket, User servidor) {
         this.socket = socket;
         this.servidor = servidor;
     }
@@ -58,7 +60,7 @@ public class SocketTcp extends Thread implements MyObserver {
         return "(Client) " + br.readLine();
     }
 
-    public void notifyServer() {
+    public void notifyServer(String message) {
         servidor.broadcast(message);
     }
 
@@ -75,7 +77,7 @@ public class SocketTcp extends Thread implements MyObserver {
             String message;
             do {
                 message = " " + reciveMessage();
-
+                notifyServer(message);
             } while(!message.equals("/END"));
             stopTextChannels();
             stopSocket();
