@@ -1,13 +1,13 @@
 package org.example;
 
-import org.example.socket.User;
+import org.example.socket.SocketTcpServer;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            User server = new User(3000);
+            SocketTcpServer server = new SocketTcpServer(3000);
             while(true) {
                 server.obtainsSockets();
             }

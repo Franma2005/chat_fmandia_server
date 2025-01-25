@@ -1,40 +1,93 @@
 package org.example.socket;
 
-import org.example.interfaces.MyObservable;
+import org.example.interfaces.MyObserver;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.util.ArrayList;
+import java.net.Socket;
+import java.time.LocalDateTime;
 
-public class User implements MyObservable {
+public class User extends Thread implements MyObserver {
 
-    private ArrayList<SocketTcp> socketsClients = new ArrayList<>();
-    private ServerSocket serverSocket;
+    private Socket socket;
+    private InputStream is;
+    private OutputStream os;
+    private BufferedReader br;
+    private PrintWriter pw;
 
-    public User(int port) throws IOException {
-        serverSocket = new ServerSocket(port);
+    private SocketTcpServer servidor;
+
+    public User(Socket socket, SocketTcpServer servidor) {
+        this.socket = socket;
+        this.servidor = servidor;
     }
 
-    public void obtainsSockets() throws IOException {
-        // Este es el momento en el que obtenemos la conexion con el cliente
-        addObservable(new SocketTcp(serverSocket.accept(), this));
-        socketsClients.getLast().start();
+    public void startSocket() throws IOException {
+        System.out.println("(Server) Opening the channels of communication");
+        is = socket.getInputStream();
+        os = socket.getOutputStream();
+        System.out.println("(Client) The channels of communication have been opened");
+    }
+
+    public void startTextChannels() {
+        System.out.println("(Server) Opening the text channels of communication");
+        br = new BufferedReader(new InputStreamReader(is));
+        pw = new PrintWriter(os, true);
+        System.out.println("(Server) The text channels of communication have been openned");
+    }
+
+    public void stopSocket() throws IOException {
+        System.out.println("(Server) Closing the channels of communication");
+        os.close();
+        is.close();
+        socket.close();
+        System.out.println("(Server) The channels of communication have been opened");
+    }
+
+    public void stopTextChannels() throws IOException {
+        System.out.println("(Server) Closing the text channels of communicantion");
+        br.close();
+        pw.close();
+        System.out.println("(Server) The text channels of communication have been closed");
+    }
+
+    public void sendMessage(String message) {
+        System.out.println("(Server) " + message);
+        pw.println(message);
+        pw.flush();
+    }
+
+    public String reciveMessage() throws IOException {
+        return "(Client) " + br.readLine();
+    }
+
+    public void notifyServer(String message) {
+        servidor.broadcast(message);
     }
 
     @Override
-    public void addObservable(SocketTcp socketClient) {
-        socketsClients.add(socketClient);
-    }
+    public void run() {
+        try {
+            startSocket();
+            startTextChannels();
 
-    @Override
-    public void deleteObservable(SocketTcp socketClient) {
-        socketsClients.remove(socketClient);
-    }
-
-    @Override
-    public void broadcast(String message) {
-        for (SocketTcp socketsClient : socketsClients) {
-            socketsClient.update(message);
+            LocalDateTime time = LocalDateTime.now();
+            int hour = time.getHour();
+            int minutes = time.getMinute();
+            String actualTime = hour + ":" + minutes;
+            String message;
+            do {
+                message = " " + reciveMessage();
+                notifyServer(message);
+            } while(!message.equals("/END"));
+            stopTextChannels();
+            stopSocket();
+        } catch(IOException exception) {
+            System.out.println("Error: " + exception.getMessage());
         }
+    }
+
+    @Override
+    public void update(String message) {
+        sendMessage(message);
     }
 }
