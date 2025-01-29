@@ -1,6 +1,7 @@
 package org.example.socket;
 
 import org.example.interfaces.MyObserver;
+import org.example.rooms.Room;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,16 +10,18 @@ import java.time.LocalDateTime;
 public class User extends Thread implements MyObserver {
 
     private Socket socket;
+    private String name;
     private InputStream is;
     private OutputStream os;
     private BufferedReader br;
     private PrintWriter pw;
 
-    private SocketTcpServer servidor;
+    private Room room;
 
-    public User(Socket socket, SocketTcpServer servidor) {
+    public User(Socket socket, Room room, String name) {
         this.socket = socket;
-        this.servidor = servidor;
+        this.room = room;
+        this.name = name;
     }
 
     public void startSocket() throws IOException {
@@ -40,7 +43,7 @@ public class User extends Thread implements MyObserver {
         os.close();
         is.close();
         socket.close();
-        System.out.println("(Server) The channels of communication have been opened");
+        System.out.println("(Server) The channels of communication have been closed");
     }
 
     public void stopTextChannels() throws IOException {
@@ -51,17 +54,19 @@ public class User extends Thread implements MyObserver {
     }
 
     public void sendMessage(String message) {
-        System.out.println("(Server) " + message);
         pw.println(message);
         pw.flush();
     }
 
     public String reciveMessage() throws IOException {
-        return "(Client) " + br.readLine();
+        String message = br.readLine();
+        if(message == null) message = "";
+        return message;
     }
 
     public void notifyServer(String message) {
-        servidor.broadcast(message);
+        //System.out.println("Me han llamado " + name);
+        room.broadcast(message);
     }
 
     @Override
@@ -73,12 +78,16 @@ public class User extends Thread implements MyObserver {
             LocalDateTime time = LocalDateTime.now();
             int hour = time.getHour();
             int minutes = time.getMinute();
-            String actualTime = hour + ":" + minutes;
+            String actualTime;
             String message;
             do {
-                message = " " + reciveMessage();
-                notifyServer(message);
+                actualTime = hour + ":" + minutes;
+                message = reciveMessage();
+                notifyServer(message + " " + actualTime);
+                //System.out.println("El mensaje que se compara es: " + message + " de " + name);
             } while(!message.equals("/END"));
+            System.out.println("Salgo");
+            room.deleteObservable(this);
             stopTextChannels();
             stopSocket();
         } catch(IOException exception) {

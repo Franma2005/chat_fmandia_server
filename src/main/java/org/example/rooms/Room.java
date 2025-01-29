@@ -3,21 +3,22 @@ package org.example.rooms;
 import org.example.interfaces.MyObservable;
 import org.example.socket.User;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Room implements MyObservable {
 
     private String name;
-    private ArrayList<User> users;
+    private CopyOnWriteArrayList<User> users;
 
-    public Room(String name, ArrayList<User> users) {
+    public Room(String name) {
         this.name = name;
-        this.users = users;
+        this.users = new CopyOnWriteArrayList<>();
     }
 
     @Override
     public void addObservable(User socketClient) {
         users.add(socketClient);
+        users.getLast().start();
     }
 
     @Override
@@ -28,6 +29,7 @@ public class Room implements MyObservable {
     @Override
     public void broadcast(String message) {
         for (User user : users) {
+            System.out.println(user.getName());
             user.update(message);
         }
     }

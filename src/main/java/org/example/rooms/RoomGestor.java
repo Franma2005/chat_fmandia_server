@@ -2,21 +2,29 @@ package org.example.rooms;
 
 import org.example.services.RoomServices;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RoomGestor implements RoomServices {
 
-    @Override
-    public Room createRoom(String name) {
-        return null;
+    private ConcurrentHashMap<String ,Room> roomsList;
+    private static RoomGestor instance;
+
+    public RoomGestor() {}
+
+    public static RoomGestor instance() {
+        if (instance == null)
+            instance = new RoomGestor();
+        return instance;
     }
 
     @Override
-    public ArrayList<String> getRoomsNames() {
-        return null;
+    public void createRoom(String name) {
+        roomsList.put(name ,new Room(name));
     }
 
     @Override
-    public ArrayList<String> getUsersNames() {
-        return null;
+    public ConcurrentHashMap<String, Room> getRooms() {
+        return roomsList;
     }
 }
