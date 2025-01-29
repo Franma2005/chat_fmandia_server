@@ -23,7 +23,11 @@ public class SocketTcpServer {
 
     public void obtainsSockets() throws IOException {
         // Este es el momento en el que obtenemos la conexion con el cliente
-        roomsList.get(0).addObservable(new User(serverSocket.accept(), roomsList.get(0), "hola" + getNumber()));
+        User temporal = new User(serverSocket.accept(), roomsList.get(0), "hola" + getNumber());
+        System.out.println("Hola");
+        temporal.start();
+        roomsList.get(0).addObservable(temporal);
+
     }
 
     public void cambiarDeChat() {

@@ -18,18 +18,19 @@ public class Room implements MyObservable {
     @Override
     public void addObservable(User socketClient) {
         users.add(socketClient);
-        users.getLast().start();
     }
 
     @Override
     public void deleteObservable(User socketClient) {
         users.remove(socketClient);
+        for (User user : users) {
+            System.out.println(user.getName());
+        }
     }
 
     @Override
     public void broadcast(String message) {
         for (User user : users) {
-            System.out.println(user.getName());
             user.update(message);
         }
     }
