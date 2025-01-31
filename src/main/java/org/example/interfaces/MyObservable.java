@@ -1,12 +1,12 @@
 package org.example.interfaces;
 
-import org.example.socket.User;
+import org.example.socket.SocketManager;
 
 public interface MyObservable {
 
-    public void addObservable(User socketClient);
+    public void addObservable(SocketManager socketClient);
 
-    public void deleteObservable(User socketClient);
+    public void deleteObservable(SocketManager socketClient);
 
     public void broadcast(String message);
 }

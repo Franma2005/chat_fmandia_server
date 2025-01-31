@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
 
-public class User extends Thread implements MyObserver {
+public class SocketManager extends Thread implements MyObserver {
 
     private Socket socket;
     private String name;
@@ -18,9 +18,8 @@ public class User extends Thread implements MyObserver {
 
     private Room room;
 
-    public User(Socket socket, Room room, String name) {
+    public SocketManager(Socket socket, String name) {
         this.socket = socket;
-        this.room = room;
         this.name = name;
     }
 
@@ -67,6 +66,10 @@ public class User extends Thread implements MyObserver {
     public void notifyServer(String message) {
         //System.out.println("Me han llamado " + name);
         room.broadcast(message);
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override

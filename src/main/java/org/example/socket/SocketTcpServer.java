@@ -1,40 +1,26 @@
 package org.example.socket;
 
-import org.example.interfaces.MyObservable;
-import org.example.rooms.Room;
-
+import org.example.rooms.RoomGestor;
+import org.example.services.UserNameCreator;
 import java.io.*;
 import java.net.ServerSocket;
-import java.util.ArrayList;
 
 public class SocketTcpServer {
 
-    private ArrayList<Room> roomsList;
+    private RoomGestor roomGestor;
+    private UserNameCreator nameCreator;
     private ServerSocket serverSocket;
-
-    //Debbugging
-    int number = 0;
 
     public SocketTcpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        roomsList = new ArrayList<>();
-        roomsList.add(new Room("General"));
+        nameCreator = UserNameCreator.getInstance();
+        roomGestor = new RoomGestor();
     }
 
     public void obtainsSockets() throws IOException {
         // Este es el momento en el que obtenemos la conexion con el cliente
-        User temporal = new User(serverSocket.accept(), roomsList.get(0), "hola" + getNumber());
-        System.out.println("Hola");
+        SocketManager temporal = new SocketManager(serverSocket.accept(), nameCreator.createName());
+        roomGestor.roomEntry(temporal, "General");
         temporal.start();
-        roomsList.get(0).addObservable(temporal);
-
-    }
-
-    public void cambiarDeChat() {
-
-    }
-
-    public int getNumber() {
-        return number++;
     }
 }

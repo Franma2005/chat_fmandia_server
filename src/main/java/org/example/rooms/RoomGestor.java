@@ -1,21 +1,23 @@
 package org.example.rooms;
 
-import org.example.services.RoomServices;
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.example.socket.SocketManager;
+
+import java.util.HashMap;
+
 
 public class RoomGestor implements RoomServices {
 
-    private ConcurrentHashMap<String ,Room> roomsList;
-    private static RoomGestor instance;
+    private HashMap<String ,Room> roomsList;
 
-    public RoomGestor() {}
+    public RoomGestor() {
+        roomsList = new HashMap<>();
+        createRoom("General");
+    }
 
-    public static RoomGestor instance() {
-        if (instance == null)
-            instance = new RoomGestor();
-        return instance;
+    @Override
+    public void roomEntry(SocketManager user, String nameRoom) {
+        user.setRoom(roomsList.get(nameRoom));
+        roomsList.get(nameRoom).addObservable(user);
     }
 
     @Override
@@ -24,7 +26,7 @@ public class RoomGestor implements RoomServices {
     }
 
     @Override
-    public ConcurrentHashMap<String, Room> getRooms() {
-        return roomsList;
+    public Room getRoom(String roomName) {
+        return roomsList.get(roomName);
     }
 }
