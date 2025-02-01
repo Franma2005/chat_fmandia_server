@@ -1,16 +1,15 @@
 package org.example.rooms;
 
 import org.example.socket.MessageHandler;
-import org.example.socket.SocketManager;
 
 import java.util.HashMap;
 
 
-public class RoomGestor implements RoomServices {
+public class RoomManager implements RoomServices {
 
     private HashMap<String ,Room> roomsList;
 
-    public RoomGestor() {
+    public RoomManager() {
         roomsList = new HashMap<>();
         createRoom("General");
     }

@@ -1,20 +1,20 @@
 package org.example.socket;
 
-import org.example.rooms.RoomGestor;
+import org.example.rooms.RoomManager;
 import org.example.services.UserNameCreator;
 import java.io.*;
 import java.net.ServerSocket;
 
 public class SocketTcpServer {
 
-    private RoomGestor roomGestor;
+    private RoomManager roomGestor;
     private UserNameCreator nameCreator;
     private ServerSocket serverSocket;
 
     public SocketTcpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         nameCreator = UserNameCreator.getInstance();
-        roomGestor = new RoomGestor();
+        roomGestor = new RoomManager();
     }
 
     public void obtainsSockets() throws IOException {
