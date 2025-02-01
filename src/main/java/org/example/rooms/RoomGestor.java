@@ -1,5 +1,6 @@
 package org.example.rooms;
 
+import org.example.socket.MessageHandler;
 import org.example.socket.SocketManager;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class RoomGestor implements RoomServices {
     }
 
     @Override
-    public void roomEntry(SocketManager user, String nameRoom) {
+    public void roomEntry(MessageHandler user, String nameRoom) {
         user.setRoom(roomsList.get(nameRoom));
         roomsList.get(nameRoom).addObservable(user);
     }

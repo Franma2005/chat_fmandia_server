@@ -19,8 +19,8 @@ public class SocketTcpServer {
 
     public void obtainsSockets() throws IOException {
         // Este es el momento en el que obtenemos la conexion con el cliente
-        SocketManager temporal = new SocketManager(serverSocket.accept(), nameCreator.createName());
-        roomGestor.roomEntry(temporal, "General");
-        temporal.start();
+        MessageHandler temporalUser = new MessageHandler(serverSocket.accept(), nameCreator.createName());
+        roomGestor.roomEntry(temporalUser, "General");
+        temporalUser.start();
     }
 }

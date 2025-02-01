@@ -1,7 +1,6 @@
 package org.example.interfaces;
 
 import org.example.socket.MessageHandler;
-import org.example.socket.SocketManager;
 
 public interface MyObservable {
 

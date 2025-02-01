@@ -10,15 +10,13 @@ import java.time.LocalDateTime;
 public class SocketManager {
 
     private Socket socket;
-    private String nameUser;
     private InputStream is;
     private OutputStream os;
     private BufferedReader br;
     private PrintWriter pw;
 
-    public SocketManager(Socket socket, String nameUser) {
+    public SocketManager(Socket socket) {
         this.socket = socket;
-        this.nameUser = nameUser;
     }
 
     public void startSocket() throws IOException {

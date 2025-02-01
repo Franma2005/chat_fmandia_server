@@ -4,15 +4,18 @@ import org.example.interfaces.MyObserver;
 import org.example.rooms.Room;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.time.LocalDateTime;
 
 public class MessageHandler extends Thread implements MyObserver {
 
     private SocketManager socketUser;
+    private String userName;
     private Room room;
 
-    public MessageHandler(SocketManager socketUser) {
-        this.socketUser = socketUser;
+    public MessageHandler(Socket socket, String userName) {
+        this.socketUser = new SocketManager(socket);
+        this.userName = userName;
     }
 
     public void sendMessage(String message) {
