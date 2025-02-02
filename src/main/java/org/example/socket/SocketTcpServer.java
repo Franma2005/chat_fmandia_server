@@ -14,7 +14,7 @@ public class SocketTcpServer {
     public SocketTcpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         nameCreator = UserNameCreator.getInstance();
-        roomGestor = new RoomManager();
+        roomGestor = RoomManager.getInstance();
     }
 
     public void obtainsSockets() throws IOException {

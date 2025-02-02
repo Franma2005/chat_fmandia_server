@@ -1,32 +1,20 @@
 package org.example.middleware;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.example.entities.Message;
+import org.example.interfaces.MyObserver;
+import org.example.rooms.Room;
+import org.example.rooms.RoomManager;
+import org.example.socket.MessageHandler;
 
+import java.time.LocalDateTime;
 
-public class WebSocketMiddleware {
+public class WebSocketMiddleware implements MyObserver {
 
-    private Gson gson;
+    private MessageHandler user;
+    private Room room;
+    private RoomManager roomManager;
 
-    public WebSocketMiddleware() {
-        gson = new GsonBuilder().setPrettyPrinting().create();
-    }
-
-    public String buildJson(Message message) {
-        return gson.toJson(message);
-    }
-
-    public Message destructureJson(String message) {
-        return gson.fromJson(message, Message.class);
-    }
-
-    public void messageManager(Message message) {
-        message.getAction();
-    }
-
-    public void sendMessage() {
-
+    public WebSocketMiddleware(MessageHandler user) {
+        this.user = user;
     }
 
     public void closeSocketClient() {
@@ -38,4 +26,23 @@ public class WebSocketMiddleware {
     }
 
     public void changeChatRoom() {}
+
+    // Metodos necesarios patrón observer
+    public void notifyServer(String message) {
+        this.room.broadcast(message);
+    }
+
+    // Metodo para obtener la hora en el momento en el que el servidor recibe el mensaje
+    public String getHour() {
+        LocalDateTime time = LocalDateTime.now();
+        int hour = time.getHour();
+        int minutes = time.getMinute();
+        return hour + ":" + minutes;
+    }
+
+    @Override
+    public void update(String message) {
+        user.sendMessage(message);
+    }
+
 }

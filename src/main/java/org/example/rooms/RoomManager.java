@@ -8,10 +8,17 @@ import java.util.HashMap;
 public class RoomManager implements RoomServices {
 
     private HashMap<String ,Room> roomsList;
+    private static RoomManager instance;
 
-    public RoomManager() {
+    private RoomManager() {
         roomsList = new HashMap<>();
         createRoom("General");
+    }
+
+    public static RoomManager getInstance() {
+        if (instance == null)
+            instance = new RoomManager();
+        return instance;
     }
 
     @Override
