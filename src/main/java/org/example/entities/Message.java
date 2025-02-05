@@ -5,6 +5,7 @@ public class Message {
 
     private Action action;
     private String content;
+    private String time;
 
     // Incluye la acción que realizará el servidor y el mensaje que imprimira este
     public Message(Action type, String content) {
@@ -26,5 +27,13 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTime() {
+        return time;
+    };
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

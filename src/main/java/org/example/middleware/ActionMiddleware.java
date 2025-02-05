@@ -38,7 +38,8 @@ public class ActionMiddleware {
 
     // Metodos necesarios patrón observer
     public void notifyServer(Message message) {
-        this.user.getRoom().broadcast(this.user.getMiddlewareJson().buildJson(message) + " :" + getHour());
+        message.setTime(getHour());
+        this.user.getRoom().broadcast(this.user.getMiddlewareJson().buildJson(message));
     }
 
     // Metodo para obtener la hora en el momento en el que el servidor recibe el mensaje
