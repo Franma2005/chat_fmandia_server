@@ -1,6 +1,6 @@
 package org.example.middleware;
 
-import org.example.rooms.Room;
+import org.example.entities.Message;
 import org.example.rooms.RoomManager;
 import org.example.socket.MessageHandler;
 
@@ -27,8 +27,9 @@ public class ActionMiddleware {
         }
     }
 
-    public void createChatRoom(String message) {
-        roomManager.createRoom(message);
+    public void createChatRoom(Message message) {
+        notifyServer(message);
+        roomManager.createRoom(message.getContent());
     }
 
     public void changeChatRoom() {
@@ -36,8 +37,8 @@ public class ActionMiddleware {
     }
 
     // Metodos necesarios patrón observer
-    public void notifyServer(String message) {
-        this.user.getRoom().broadcast(message + " :" + getHour());
+    public void notifyServer(Message message) {
+        this.user.getRoom().broadcast(this.user.getMiddlewareJson().buildJson(message) + " :" + getHour());
     }
 
     // Metodo para obtener la hora en el momento en el que el servidor recibe el mensaje

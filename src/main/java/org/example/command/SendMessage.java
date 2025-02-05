@@ -1,5 +1,6 @@
 package org.example.command;
 
+import org.example.entities.Message;
 import org.example.interfaces.MyCommand;
 import org.example.middleware.ActionMiddleware;
 
@@ -13,7 +14,7 @@ public class SendMessage implements MyCommand {
 
     // Metodo para enviar mensajes
     @Override
-    public void execute(String message) {
+    public void execute(Message message) {
         middleware.notifyServer(message);
     }
 }

@@ -1,5 +1,6 @@
 package org.example.command;
 
+import org.example.entities.Message;
 import org.example.interfaces.MyCommand;
 import org.example.middleware.ActionMiddleware;
 
@@ -13,7 +14,7 @@ public class ChangeChatRoom implements MyCommand {
 
     // El usuario ejecuta el metodo del middleware cambiarse de habitacion
     @Override
-    public void execute(String message) {
+    public void execute(Message message) {
         middleware.changeChatRoom();
     }
 }

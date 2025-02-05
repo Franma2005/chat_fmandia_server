@@ -9,7 +9,7 @@ public class JsonMiddleware {
     private Gson gson;
 
     public JsonMiddleware() {
-        gson = new GsonBuilder().setPrettyPrinting().create();
+        gson = new GsonBuilder().create();
     }
 
     // Metodos para trabajar con el json

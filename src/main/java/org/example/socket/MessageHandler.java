@@ -55,7 +55,7 @@ public class MessageHandler extends Thread implements MyObserver {
 
     // Metodo para realizar la acción que llegue en el json
     public void makeAction(Message message) {
-        commands.get(message.getAction()).execute(message.getContent());
+        commands.get(message.getAction()).execute(message);
     }
 
     //! Son necesarios para que el WebSocketMiddleware trabaje con ellos
@@ -85,6 +85,10 @@ public class MessageHandler extends Thread implements MyObserver {
 
     public ActionMiddleware getMiddlewareAction() {
         return middlewareAction;
+    }
+
+    public JsonMiddleware getMiddlewareJson() {
+        return middlewareJson;
     }
 
     @Override
