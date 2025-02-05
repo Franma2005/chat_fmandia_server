@@ -44,8 +44,6 @@ public class SocketManager {
     }
 
     // Getter necesarios de la clase
-
-
     public Socket getSocket() {
         return socket;
     }

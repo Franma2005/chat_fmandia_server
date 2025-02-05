@@ -2,9 +2,9 @@ package org.example.rooms;
 
 import org.example.interfaces.MyObservable;
 import org.example.socket.MessageHandler;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 
+//* Clase que contiene la información de la sala y además controla el patrón observable
 public class Room implements MyObservable {
 
     private String name;

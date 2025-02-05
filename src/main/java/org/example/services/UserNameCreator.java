@@ -1,5 +1,6 @@
 package org.example.services;
 
+//* Es un servicio para crear nombres de usuario
 public class UserNameCreator {
 
     private String name;
@@ -11,6 +12,7 @@ public class UserNameCreator {
         number = 0;
     }
 
+    // Usa el patrón Singleton
     public static UserNameCreator getInstance() {
         if(instance == null)
             instance = new UserNameCreator();

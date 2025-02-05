@@ -5,6 +5,7 @@ import org.example.services.UserNameCreator;
 import java.io.*;
 import java.net.ServerSocket;
 
+//* Clase principal del servidor que devuelve el socket de cada cliente en el servidor
 public class SocketTcpServer {
 
     private RoomManager roomGestor;
@@ -17,8 +18,8 @@ public class SocketTcpServer {
         roomGestor = RoomManager.getInstance();
     }
 
+    // Este es el momento en el que obtenemos la conexion con el cliente
     public void obtainsSockets() throws IOException {
-        // Este es el momento en el que obtenemos la conexion con el cliente
         MessageHandler temporalUser = new MessageHandler(serverSocket.accept(), nameCreator.createName(), roomGestor.getRoom("General"));
         roomGestor.roomEntry(temporalUser, "General");
         temporalUser.start();

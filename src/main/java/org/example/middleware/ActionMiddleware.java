@@ -1,5 +1,6 @@
 package org.example.middleware;
 
+import org.example.rooms.Room;
 import org.example.rooms.RoomManager;
 import org.example.socket.MessageHandler;
 
@@ -26,7 +27,8 @@ public class ActionMiddleware {
         }
     }
 
-    public void createChatRoom() {
+    public void createChatRoom(String message) {
+        roomManager.createRoom(message);
     }
 
     public void changeChatRoom() {

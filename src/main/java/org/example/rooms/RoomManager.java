@@ -1,10 +1,9 @@
 package org.example.rooms;
 
 import org.example.socket.MessageHandler;
-
 import java.util.HashMap;
 
-
+//* Gestor de salas. Separación de responsabilidades con la parte de sala
 public class RoomManager implements RoomServices {
 
     private HashMap<String ,Room> roomsList;

@@ -14,6 +14,6 @@ public class CreateChatRoom implements MyCommand {
     // Metodo para crear nuevas salas de chat
     @Override
     public void execute(String message) {
-        middleware.createChatRoom();
+        middleware.createChatRoom(message);
     }
 }
