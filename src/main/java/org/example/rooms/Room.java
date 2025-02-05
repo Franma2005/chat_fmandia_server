@@ -15,6 +15,10 @@ public class Room implements MyObservable {
         this.users = new CopyOnWriteArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void addObservable(MessageHandler messageHandler) {
         users.add(messageHandler);

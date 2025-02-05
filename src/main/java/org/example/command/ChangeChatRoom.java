@@ -15,6 +15,6 @@ public class ChangeChatRoom implements MyCommand {
     // El usuario ejecuta el metodo del middleware cambiarse de habitacion
     @Override
     public void execute(Message message) {
-        middleware.changeChatRoom();
+        middleware.changeChatRoom(message);
     }
 }

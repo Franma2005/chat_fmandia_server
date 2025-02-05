@@ -27,6 +27,11 @@ public class RoomManager implements RoomServices {
     }
 
     @Override
+    public void getOutLastRoom(MessageHandler user) {
+        roomsList.get(user.getRoom().getName()).deleteObservable(user);
+    }
+
+    @Override
     public void createRoom(String name) {
         roomsList.put(name ,new Room(name));
     }

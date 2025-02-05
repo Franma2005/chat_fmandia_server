@@ -32,8 +32,9 @@ public class ActionMiddleware {
         roomManager.createRoom(message.getContent());
     }
 
-    public void changeChatRoom() {
-
+    public void changeChatRoom(Message message) {
+        roomManager.getOutLastRoom(this.user);
+        roomManager.roomEntry(this.user, message.getContent());
     }
 
     // Metodos necesarios patrón observer
