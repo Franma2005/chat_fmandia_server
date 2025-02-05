@@ -7,7 +7,6 @@ import org.example.command.SendMessage;
 import org.example.entities.Action;
 import org.example.entities.Message;
 import org.example.interfaces.MyCommand;
-import org.example.interfaces.MyObservable;
 import org.example.interfaces.MyObserver;
 import org.example.middleware.JsonMiddleware;
 import org.example.middleware.ActionMiddleware;
@@ -47,7 +46,6 @@ public class MessageHandler extends Thread implements MyObserver {
             put(Action.CLOSE_WINDOW, new CloseSocketClient(middlewareAction));
             put(Action.CREATE_CHAT_ROOM, new CreateChatRoom(middlewareAction));
         }};
-
     }
 
     // Vamos a gestionar la recepción de mensajes
@@ -92,15 +90,14 @@ public class MessageHandler extends Thread implements MyObserver {
     @Override
     public void run() {
         try {
-            socketUser.startSocket();
+            socketUser.startByteChannels();
             socketUser.startTextChannels();
             Message message;
             do {
                 message = reciveMessage();
                 makeAction(message);
-            } while(!message.equals("/END"));
+            } while(!socketUser.getSocket().isClosed());
             System.out.println("Salgo");
-            room.deleteObservable(this);
         } catch(IOException exception) {
             System.out.println("Error: " + exception.getMessage());
         }

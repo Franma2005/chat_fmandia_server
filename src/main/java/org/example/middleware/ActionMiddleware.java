@@ -1,7 +1,5 @@
 package org.example.middleware;
 
-import org.example.interfaces.MyObserver;
-import org.example.rooms.Room;
 import org.example.rooms.RoomManager;
 import org.example.socket.MessageHandler;
 
@@ -21,14 +19,14 @@ public class ActionMiddleware {
     public void closeSocketClient() {
         try {
             user.getSocketUser().stopTextChannels();
-            user.getSocketUser().stopSocket();
+            user.getSocketUser().stopByteChannels();
+            user.getRoom().deleteObservable(user);
         } catch (IOException e) {
             System.out.println("Error al cerrar los canales del socket");
         }
     }
 
     public void createChatRoom() {
-
     }
 
     public void changeChatRoom() {
@@ -37,7 +35,7 @@ public class ActionMiddleware {
 
     // Metodos necesarios patrón observer
     public void notifyServer(String message) {
-        this.user.getRoom().broadcast(message);
+        this.user.getRoom().broadcast(message + " :" + getHour());
     }
 
     // Metodo para obtener la hora en el momento en el que el servidor recibe el mensaje
