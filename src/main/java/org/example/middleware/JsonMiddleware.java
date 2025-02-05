@@ -18,6 +18,7 @@ public class JsonMiddleware {
     }
 
     public Message destructureJson(String message) {
+        System.out.println(message);
         return gson.fromJson(message, Message.class);
     }
 }

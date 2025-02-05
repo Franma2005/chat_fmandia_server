@@ -5,31 +5,39 @@ import org.example.rooms.Room;
 import org.example.rooms.RoomManager;
 import org.example.socket.MessageHandler;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class ActionMiddleware implements MyObserver {
+public class ActionMiddleware {
 
     private MessageHandler user;
-    private Room room;
     private RoomManager roomManager;
 
     public ActionMiddleware(MessageHandler user) {
         this.user = user;
+        this.roomManager = RoomManager.getInstance();
     }
 
     public void closeSocketClient() {
-
+        try {
+            user.getSocketUser().stopTextChannels();
+            user.getSocketUser().stopSocket();
+        } catch (IOException e) {
+            System.out.println("Error al cerrar los canales del socket");
+        }
     }
 
     public void createChatRoom() {
 
     }
 
-    public void changeChatRoom() {}
+    public void changeChatRoom() {
+
+    }
 
     // Metodos necesarios patrón observer
     public void notifyServer(String message) {
-        this.room.broadcast(message);
+        this.user.getRoom().broadcast(message);
     }
 
     // Metodo para obtener la hora en el momento en el que el servidor recibe el mensaje
@@ -38,11 +46,6 @@ public class ActionMiddleware implements MyObserver {
         int hour = time.getHour();
         int minutes = time.getMinute();
         return hour + ":" + minutes;
-    }
-
-    @Override
-    public void update(String message) {
-        user.sendMessage(message);
     }
 
 }

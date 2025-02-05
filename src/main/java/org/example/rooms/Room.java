@@ -2,7 +2,6 @@ package org.example.rooms;
 
 import org.example.interfaces.MyObservable;
 import org.example.socket.MessageHandler;
-import org.example.socket.SocketManager;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,9 +23,6 @@ public class Room implements MyObservable {
     @Override
     public void deleteObservable(MessageHandler messageHandler) {
         users.remove(messageHandler);
-        for (MessageHandler user : users) {
-            System.out.println(user.getName());
-        }
     }
 
     @Override
