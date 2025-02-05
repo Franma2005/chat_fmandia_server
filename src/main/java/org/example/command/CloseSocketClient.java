@@ -1,17 +1,17 @@
 package org.example.command;
 
 import org.example.interfaces.MyCommand;
-import org.example.middleware.WebSocketMiddleware;
+import org.example.middleware.ActionMiddleware;
 
 public class CloseSocketClient implements MyCommand {
-    private WebSocketMiddleware middleware;
+    private ActionMiddleware middleware;
 
-    public CloseSocketClient(WebSocketMiddleware middleware) {
+    public CloseSocketClient(ActionMiddleware middleware) {
         this.middleware = middleware;
     }
 
     @Override
-    public void execute() {
-
+    public void execute(String message) {
+        middleware.closeSocketClient();
     }
 }
